@@ -97,11 +97,12 @@ jobs:
 
       - name: Create Release
         id: create_release
-        uses: softprops/action-gh-release@v2.2.1
-        if: startsWith(github.ref, 'refs/tags/')
+        uses: comnoco/create-release-action@v2.0.5
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # Can't use a GITHUB_TOKEN for this or other actions won't be triggered on a new release
         with:
           tag_name: ${{ needs.check-releases.outputs.firebase-tools-release }}
-          name: firebase-tools ${{ needs.check-releases.outputs.firebase-tools-release }}
+          release_name: firebase-tools ${{ needs.check-releases.outputs.firebase-tools-release }}
           body: "Bump `firebase-tools` to ${{ needs.check-releases.outputs.firebase-tools-release }}"
           draft: false
           prerelease: false
